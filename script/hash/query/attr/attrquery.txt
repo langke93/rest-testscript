@@ -1,0 +1,18 @@
+${BASE_URL}:${PORT}/${INDEX_NAME}/test1/_search
+
+POST
+
+{
+"fields":["ttattrint","ttattrdate"],
+"query":{
+ "term": 
+ {
+ "ttint0" :"${SEQINT.1}",    
+ }
+}
+}
+
+{"qTime":"6ms","hits":{"total":1,"hits":[
+{"_id":"1","_type":"test1","_source":{"ttattrint":"61234","ttattrdate":"2012-01-02 01:02:03"}}]}}
+
+${CONCURRENT.300_100}

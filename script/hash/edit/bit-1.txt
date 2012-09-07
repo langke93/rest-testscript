@@ -1,0 +1,8 @@
+${BASE_URL}:${PORT}/${INDEX_NAME}/c/bit1/_bit?op=and
+
+PUT
+
+{"ttattrint":0}
+
+{"ok":true,"affectedCount":1,"qTime":0}
+

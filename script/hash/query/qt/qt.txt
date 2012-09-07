@@ -1,0 +1,6 @@
+http://10.29.80.100:9200/GoodsSellerT/_search?nsextend=40&o=%E6%B5%8B%E8%AF%95
+
+#POST
+
+#{"from":0,"size":40,"fields":["lSellerGoodsId","lSellerId","lGoodsId","strTitle","lBrandId","strBrandName","strBrandModel", "nPrice","strLogo1URL","nMinPrice","nMaxPrice","nSellCount","dtCreateTime","lCategoryId2","lShopId","strShopName","nRangeIndex","strActiveTag","strConsumeType"],"sort":[{"[_score *Math.atan(value(nWeight)+0.1)]":"desc"}],query:{"bool":{"must":[{"term":{ "strRangeTag":"2"}},{"query_string":{"query":"_all:测试 OR strTitle:测试"}}],}}, faceted:{ "mincount":1, "fields": {"lBrandId":{},"lCategoryId1":{} }},"group": {"fieldname": "lGoodsId"},"highlight": {"fields": {"strTitle": {"pre_tags": "","post_tags": "<\/font>"}}},}
+

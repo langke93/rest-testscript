@@ -1,0 +1,52 @@
+${BASE_URL}:${PORT}/${INDEX_NAME}/d/_ma
+
+POST
+
+      {
+	"docs" :
+	[	
+		{
+		 "_id":"bit11",
+		 "ttattrint":10
+		},
+		{
+		 "_id":"bit${QUERYWD.randkwd2.txt}",
+		 "ttattrint":10
+		},
+		{
+		 "_id":"bit${QUERYWD.RAND}",
+		 "ttattrint":10
+		},
+		{
+		 "_id":"bit${QUERYWD.RAND}",
+		 "ttattrint":10
+		},
+		{
+		 "_id":"bit15",
+		 "ttattrint":10
+		},
+		{
+		 "_id":"bit16",
+		 "ttattrint":10
+		},
+		{
+		 "_id":"bit17",
+		 "ttattrint":10
+		},
+		{
+		 "_id":"bit18",
+		 "ttattrint":10
+		},
+		{
+		 "_id":"bit19",
+		 "ttattrint":10
+		},
+		{
+		 "_id":"bit20",
+		 "ttattrint":10
+		}
+		]
+	}
+
+	
+${FOREACH.1} 

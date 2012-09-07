@@ -1,0 +1,61 @@
+${BASE_URL}:${PORT}/${INDEX_NAME}/_schema
+
+POST
+
+<schema defaultType="text"  name="${INDEX_NAME}" defaultSearchField="_all" comment="testing">
+  <fields> 
+    <all name="_all" termVector="NO" index="ANALYZED_NO_NORMS" store="NO" analyzer="com.woyo.smart.util.SmartSplitCombChineseAnalyzer" fields="tttext5,tttext6,tttext7,dx_*,txt_*,tdz_*,tttext1,tttext2,tttext3,tttext4,tttext0"/>
+    <id name="_id"/>
+    <type name="_type" addTypeAfterId="true"/>
+    <attribute name="ttattrdate" startPos="3" format="yyyy-MM-dd HH:mm:ss" comment="attribute" valueLength="8"/>
+    <attribute name="ttattrint" startPos="0" comment="attribute" valueLength="3"/>
+    <byte name="ttbyte0" precisionStep="4" index="true" store="true" comment="byte"/>
+    <byte name="ttbyte1" precisionStep="4" index="true" store="false" comment="byte"/>
+    <byte name="ttbyte2" precisionStep="4" index="false" store="true" comment="byte"/>
+    <datetime name="ttdatetime0" precisionStep="4" index="true" store="true" format="yyyy-MM-dd HH:mm:ss" comment="datetime"/>
+    <datetime name="ttdatetime1" precisionStep="4" index="true" store="true" format="yyyy/MM/dd HH-mm-ss" comment="datetime"/>
+    <datetime name="ttdatetime2" precisionStep="4" index="true" store="false" format="yyyy-MM-dd HH:mm:ss" comment="datetime"/>
+    <datetime name="ttdatetime3" precisionStep="4" index="false" store="true" format="yyyy-MM-dd HH:mm:ss" comment="datetime"/>
+    <datetime name="ttdatetime4" precisionStep="1" index="true" store="true" format="yyyy-MM-dd HH:mm:ss" comment="datetime"/>
+    <double name="ttdouble0" precisionStep="4" index="true" store="true" comment="double"/>
+    <double name="ttdouble1" precisionStep="4" index="true" store="false" comment="double"/>
+    <double name="ttdouble2" precisionStep="4" index="false" store="true" comment="double"/>
+    <double name="ttdouble3" precisionStep="1" index="true" store="true" comment="double"/>
+    <float name="ttfloat0" precisionStep="4" index="true" store="true" comment="float"/>
+    <float name="ttfloat1" precisionStep="4" index="true" store="false" comment="float"/>
+    <float name="ttfloat2" precisionStep="4" index="false" store="true" comment="float"/>
+    <float name="ttfloat3" precisionStep="1" index="true" store="true" comment="float"/>
+    <int name="ttint0" precisionStep="4" index="true" store="true" comment="int"/>
+    <int name="ttint1" precisionStep="4" index="true" store="false" comment="int"/>
+    <int name="ttint2" precisionStep="4" index="false" store="true" comment="int"/>
+    <int name="ttint3" precisionStep="1" index="true" store="true" comment="int"/>
+    <long name="ttlong0" precisionStep="4" index="true" store="true" comment="long"/>
+    <long name="ttlong1" precisionStep="4" index="true" store="false" comment="long"/>
+    <long name="ttlong2" precisionStep="4" index="false" store="true" comment="long"/>
+    <long name="ttlong3" precisionStep="1" index="true" store="true" comment="long"/>
+    <short name="ttshort0" precisionStep="4" index="true" store="true" comment="short"/>
+    <short name="ttshort1" precisionStep="4" index="true" store="false" comment="short"/>
+    <short name="ttshort2" precisionStep="4" index="false" store="true" comment="short"/>
+    <store name="ttstore" comment="store"/>
+    <tag name="tttag0" comment="tag" OmitTermFreqAndPositions="true"/>
+    <tag name="tttag1" comment="tag" OmitTermFreqAndPositions="false"/>
+    <text name="tttext0" termVector="WITH_POSITIONS_OFFSETS" index="ANALYZED" store="YES" analyzer="com.woyo.search.analysis.WoyoNGramAnalyzer" comment="text"/>
+    <text name="tttext1" termVector="WITH_POSITIONS_OFFSETS" index="ANALYZED" store="YES" analyzer="org.apache.lucene.analysis.standard.StandardAnalyzer" comment="text"/>
+    <text name="tttext2" termVector="WITH_POSITIONS_OFFSETS" index="ANALYZED" store="YES" analyzer="com.woyo.smart.util.SmartSplitCombChineseAnalyzer" comment="text"/>
+    <text name="tttext3" termVector="WITH_POSITIONS_OFFSETS" index="ANALYZED" store="YES" analyzer="org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer" comment="text"/>
+    <text name="tttext4" termVector="NO" index="NOT_ANALYZED" store="YES" analyzer="org.apache.lucene.analysis.KeywordAnalyzer" comment="text"/>
+    <text name="tttext5" termVector="NO" index="NOT_ANALYZED" store="YES" analyzer="org.apache.lucene.analysis.KeywordAnalyzer" comment="text"/>
+    <text name="tttext6" termVector="NO" index="NO" store="YES" analyzer="org.apache.lucene.analysis.standard.StandardAnalyzer" comment="text"/>
+    <text name="tttext7" termVector="NO" index="NO" store="YES" analyzer="org.apache.lucene.analysis.standard.StandardAnalyzer" comment="text"/>
+    <text name="dx_*" termVector="WITH_POSITIONS_OFFSETS" index="ANALYZED" store="YES" analyzer="org.apache.lucene.analysis.standard.StandardAnalyzer" comment="dx_*"/>
+    <text name="tdz_*" termVector="NO" index="NO" store="YES" analyzer="org.apache.lucene.analysis.standard.StandardAnalyzer" comment="tdz_*"/>
+    <text name="txt_*" termVector="NO" index="NOT_ANALYZED" store="NO" analyzer="org.apache.lucene.analysis.KeywordAnalyzer" comment="txt_*"/>
+  </fields>
+  <shardMethod>
+    <hash count="1"/>
+  </shardMethod>
+</schema>
+
+
+
+${SLEEP.10}

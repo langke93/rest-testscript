@@ -1,0 +1,56 @@
+${BASE_URL}:${PORT}/${INDEX_NAME}/test1/${SEQINT.11123726}
+
+POST
+
+  {
+	"ttbyte0" : "50",
+	"ttbyte1" : "60",
+	"ttbyte2" : "70",
+	"ttshort0" : "80",
+	"ttshort1" : "90",
+	"ttshort2" : "100",
+	"ttint0" : "${SEQINT.11123726}",
+	"ttint1" : "10",
+	"ttint2" : "10",
+	"ttint3" : "10",
+	"ttlong0" : "10002",
+	"ttlong1" : "20002",
+	"ttlong2" : "30002",
+	"ttlong3" : "30002",
+	"ttfloat0" : "64.111",
+	"ttfloat1" : "5.222",
+	"ttfloat2" : "6.333",
+	"ttfloat3" : "6.333",
+        "ttdouble0" : "6700000.4444",
+	"ttdouble1" : "8000.5555",
+	"ttdouble2" : "9000.6666",
+	"ttdouble3" : "9000.6666",
+        "ttdatetime0" : "2000-02-02 02:03:03",
+	"ttdatetime1" : "2010/05/02 00-00-00",
+	"ttdatetime2" : "2020-05-03 00:00:00",
+	"ttdatetime3" : "2030-05-04 00:00:00",
+            "ttdatetime4" : "2030-05-05 00:00:00",
+	"ttstore" : "55woyo",
+	"tttag0"  : "产品 woyo",
+        "tttag1"  : "测试 tagging 55555",
+	"tttext0" :  "functional${SEQINT.11123726}",
+	"tttext1" : "测试文本${SEQINT.11123726}",
+	"tttext2" : "D&G杜嘉班纳 皮带1",
+	"tttext3" : "D&G/杜嘉班纳",
+	"tttext4" : "有三笔美国对台军售项目遭美国国务院",
+	"tttext5" : "Q&A",
+	"tttext6" : "测试中国,P&G",
+	"tttext7" : "${QUERYWD.randkwd2.txt}",
+	"dx_1"    : "环球网30日消息",
+	"dx_2"    : "美国国防部今天宣布",
+	"txt_1"   : "出售给台湾、，已经发包给波音公司(Boeing)",
+	"txt_2"   : "预计2011年6月可以完成.",
+	"tdz_1"   : "index not_analyzed storetrue",
+	"tdz_2"   : "termVector with_positions_offsets index not_analyzed",
+	"ttattrint" : "1",
+	"ttattrdate" : "2012-01-02 01:02:03"
+	}
+
+
+#${CONCURRENT.1_1000000}
+#${FOREACH.1000}

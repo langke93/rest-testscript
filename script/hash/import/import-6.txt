@@ -1,0 +1,61 @@
+${BASE_URL}:${PORT}/${INDEX_NAME}/f/_ma
+
+POST
+
+      {
+	"docs" :
+	[
+		{
+		 "_id":"bit36",
+		 "ttattrint":10
+		},
+		{
+		 "_id":"bit37",
+		 "ttattrint":10
+		},
+		{
+		 "_id":"bit38",
+		 "ttattrint":10
+		},
+		{
+		 "_id":"bit39",
+		 "ttattrint":10
+		},
+		{
+		 "_id":"bit40",
+		 "ttattrint":10
+		},
+		{
+		 "_id":"bit41",
+		 "ttattrint":10
+		},
+		{
+		 "_id":"bit42",
+		 "ttattrint":10
+		},
+		{
+		 "_id":"bit43",
+		 "ttattrint":10
+		},
+		{
+		 "_id":"bit44",
+		 "ttattrint":10
+		},
+		{
+		 "_id":"bit45",
+		 "ttattrint":10
+		},
+		{
+		 "_id":"bit46",
+		 "ttattrint":10
+		},
+		{
+		 "_id":"bit47",
+		 "ttattrint":10
+		},
+		{
+		 "_id":"bit48",
+		 "ttattrint":10
+		}
+       ]					            
+}

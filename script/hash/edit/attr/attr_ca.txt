@@ -1,0 +1,9 @@
+${BASE_URL}:${PORT}/${INDEX_NAME}/test1/${SEQINT.1}/_ca
+
+PUT
+
+{"ttattrint":2}
+
+{"ok":true,"affectedCount":1,"qTime":0}
+
+${CONCURRENT.2_15000}
