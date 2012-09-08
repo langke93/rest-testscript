@@ -32,4 +32,4 @@ base rest testscript 这是一个基于java http connection写的测试框架，
  		第一段URL，第二段METHOD，第三段请求BODY，第四段预计结果；第五段指令${FOREACH} ${SLEEP}
  		以空行区分每个段落,注意脚本格式:为空的段落需要留出空白段
 
- 		aaa
+ 		
