@@ -1,0 +1,9 @@
+${BASE_URL}:${PORT}/${INDEX_NAME}//_search?q=tttext1:测试文本${SEQINT.0}
+
+GET
+
+
+
+
+#${CONCURRENT.400_100}
+#${SLEEP.60}

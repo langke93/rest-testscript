@@ -1,6 +1,7 @@
 package org.langke.testscript.cmd;
 
 import org.langke.testscript.Test;
+import org.langke.testscript.util.HttpClientUtil;
 import org.langke.testscript.util.HttpSupporter;
 import org.langke.testscript.util.Response;
 import org.langke.testscript.util.TestConfig;
@@ -29,7 +30,7 @@ public abstract class Cmd {
 		
 		URL = all.substring(0,index);
 		BODY=all.substring(index+seg.length());
-		Response response = new HttpSupporter().getRequestToResponse(URL, BODY,METHOD);
+		Response response = HttpClientUtil.exec(URL, BODY, METHOD);//new HttpSupporter().getRequestToResponse(URL, BODY,METHOD);
 		return response;
 	}
 }
