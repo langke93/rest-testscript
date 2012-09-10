@@ -5,6 +5,7 @@ import org.langke.testscript.util.HttpClientUtil;
 import org.langke.testscript.util.HttpSupporter;
 import org.langke.testscript.util.Response;
 import org.langke.testscript.util.TestConfig;
+import org.langke.testscript.util.HttpClientUtil.Execute;
 
 public abstract class Cmd {
 	public abstract Object exec(String command,String key,String URL,String BODY,String METHOD,TestConfig projConfig);
@@ -30,7 +31,7 @@ public abstract class Cmd {
 		
 		URL = all.substring(0,index);
 		BODY=all.substring(index+seg.length());
-		Response response = HttpClientUtil.exec(URL, BODY, METHOD);//new HttpSupporter().getRequestToResponse(URL, BODY,METHOD);
+		Response response = HttpClientUtil.getInstance().new Execute().exec(URL, BODY, METHOD);//new HttpSupporter().getRequestToResponse(URL, BODY,METHOD);
 		return response;
 	}
 }

@@ -1,0 +1,94 @@
+${BASE_URL}:${PORT}/${INDEX_NAME}/_default_/_mapping
+
+PUT
+
+{
+    "_default_":{
+	"_source": {
+           "compress": true
+	},
+	"properties": {
+	   "id": {
+		"index" : "not_analyzed",
+	        "type": "long"
+	  },
+           "ttint": {
+                "index" : "not_analyzed",
+                "type": "integer"
+          },
+           "ttlong": {
+                "index" : "not_analyzed",
+                "type": "long"
+          },
+           "ttfloat": {
+                "index" : "not_analyzed",
+                "type": "float"
+          },
+           "ttdouble": {
+                "index" : "not_analyzed",
+                "type": "double"
+          },
+           "ttdouble": {
+                "index" : "not_analyzed",
+                "type": "double"
+          },
+           "ttdatetime": {
+                "type": "date"
+          },
+           "tttext0": {
+                "type": "string"
+          },
+           "tttext1": {
+                "type": "string"
+          },
+           "tttext2": {
+                "type": "string"
+          },
+           "tttext3": {
+                "type": "string"
+          },
+           "tttext4": {
+                "type": "string"
+          },
+           "tttext5": {
+                "type": "string"
+          },
+           "tttext6": {
+                "type": "string"
+          },
+           "tttext7": {
+                "type": "string"
+          },
+           "dx_1": {
+                "type": "string",
+                "index":"no"
+          },
+           "dx_2": {
+                "type": "string",
+                "index":"no"
+          },
+           "txt_1": {
+                "type": "string",
+                "index":"no"
+          },
+           "txt_2": {
+                "type": "string",
+                "index":"no"
+          },
+           "index_no": {
+                "type": "string",
+		"index":"no"
+          },
+           "store_no": {
+                "type": "string",
+		"store":"no"
+          },
+           "null_value": {
+                "type": "boolean",
+                "null_value":true
+          }
+	}
+    }
+}
+
+

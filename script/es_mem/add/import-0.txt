@@ -1,0 +1,30 @@
+${BASE_URL}:${PORT}/${INDEX_NAME}/_default_/${SEQINT.5000000}
+
+POST
+
+  {
+	"id" : "${SEQINT.5000000}",
+	"ttint" : "10",
+	"ttlong" : "10002",
+	"ttfloat" : "64.111",
+	"ttdouble" : "9000.6666",
+        "ttdatetime" : "2000-02-02T02:03:03",
+	"tttext0" :  "functional${SEQINT.5000000}",
+	"tttext1" : "测试文本${SEQINT.5000000}",
+	"tttext2" : "D&G杜嘉班纳 皮带1",
+	"tttext3" : "D&G/杜嘉班纳",
+	"tttext4" : "有三笔美国对台军售项目遭美国国务院",
+	"tttext5" : "Q&A",
+	"tttext6" : "测试中国,P&G",
+	"tttext7" : "${QUERYWD.randkwd2.txt}",
+	"dx_1"    : "环球网30日消息",
+	"dx_2"    : "美国国防部今天宣布",
+	"txt_1"   : "出售给台湾、，已经发包给波音公司(Boeing)",
+	"txt_2"   : "预计2011年6月可以完成.",
+	"index_no"   : "index not_analyzed storetrue",
+	"store_no"   : "termVector with_positions_offsets index not_analyzed"
+	}
+
+
+${CONCURRENT.100_100000}
+#${FOREACH.1000}
