@@ -1,16 +1,16 @@
-${BASE_URL}:${PORT}/${INDEX_NAME}/_default_/${SEQINT.5000000}
+${BASE_URL}:${PORT}/${INDEX_NAME}/_default_/${SEQINT.0}
 
 POST
 
   {
-	"id" : "${SEQINT.5000000}",
+	"id" : "${SEQINT.0}",
 	"ttint" : "10",
 	"ttlong" : "10002",
 	"ttfloat" : "64.111",
 	"ttdouble" : "9000.6666",
         "ttdatetime" : "2000-02-02T02:03:03",
-	"tttext0" :  "functional${SEQINT.5000000}",
-	"tttext1" : "测试文本${SEQINT.5000000}",
+	"tttext0" :  "functional${SEQINT.0}",
+	"tttext1" : "测试文本${SEQINT.0}",
 	"tttext2" : "D&G杜嘉班纳 皮带1",
 	"tttext3" : "D&G/杜嘉班纳",
 	"tttext4" : "有三笔美国对台军售项目遭美国国务院",
