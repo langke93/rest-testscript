@@ -15,8 +15,8 @@ import java.io.OutputStreamWriter;
 import java.util.Enumeration;
 import java.util.concurrent.ConcurrentHashMap;
 
-import org.apache.commons.io.filefilter.DirectoryFileFilter;
-import org.apache.commons.io.filefilter.FileFilterUtils;
+import net.sf.json.JSONObject;
+
 import org.langke.testscript.cmd.Cmd;
 import org.langke.testscript.cmd.CmdFactory;
 import org.langke.testscript.data.Querywd;
@@ -27,8 +27,6 @@ import org.langke.testscript.util.HttpSupporter;
 import org.langke.testscript.util.TestConfig;
 import org.langke.util.logging.ESLogger;
 import org.langke.util.logging.Loggers;
-
-import net.sf.json.JSONObject;
 
 
 /**

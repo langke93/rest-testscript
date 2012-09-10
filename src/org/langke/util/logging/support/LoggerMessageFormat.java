@@ -37,6 +37,7 @@ public class LoggerMessageFormat {
 		return format(null, messagePattern, argArray);
 	}
 
+	@SuppressWarnings("rawtypes")
 	public static String format(final String prefix,
 			final String messagePattern, final Object... argArray) {
 		if (messagePattern == null) {
@@ -124,6 +125,7 @@ public class LoggerMessageFormat {
 		}
 	}
 
+	@SuppressWarnings("rawtypes")
 	private static void deeplyAppendParameter(StringBuffer sbuf, Object o,
 			Map seenMap) {
 		if (o == null) {
@@ -171,6 +173,7 @@ public class LoggerMessageFormat {
 
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private static void objectArrayAppend(StringBuffer sbuf, Object[] a,
 			Map seenMap) {
 		sbuf.append('[');

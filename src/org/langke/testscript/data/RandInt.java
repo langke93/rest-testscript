@@ -3,7 +3,7 @@ package org.langke.testscript.data;
 import java.util.Random;
 
 public class RandInt  implements Tag{
-	static Random random = new Random(Integer.MAX_VALUE);//设置随机种子数
+	Random random = new Random(Integer.MAX_VALUE);//设置随机种子数
 	public Object replaceTag(String str,String key) {
 		String tag = "${"+key+".";
 		String temp ;

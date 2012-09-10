@@ -9,22 +9,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
-import org.apache.commons.httpclient.DefaultHttpMethodRetryHandler;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.methods.GetMethod;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.params.HttpMethodParams;
-
-
 public class Common {
 	private  BufferedReader br;
 	private  String line;
-	private HttpClient httpClient;
-
-	public Common(){
-		httpClient = new HttpClient();
-	}
-	
+ 
 	/**
 	 * 取文件内容
 	 * @param fileName
@@ -53,46 +41,6 @@ public class Common {
 			}
 		}
 		return stringBuffer;
-	}
-	
-	/**
-	 * 提交URL地址，返回结果
-	 * @param URL
-	 * @param body
-	 * @return
-	 */
-	public String postUrl(String URL,String body){
-		String result = null;
-		PostMethod postMethod = new PostMethod(URL);
-		try {
-			postMethod.getParams().setParameter(HttpMethodParams.RETRY_HANDLER, new DefaultHttpMethodRetryHandler());
-			postMethod.getParams().setContentCharset("UTF-8");
-			if (body != null) {
-				postMethod.setRequestBody(body);
-			}
-			httpClient.executeMethod(postMethod);
-			result = postMethod.getResponseBodyAsString();			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}finally{
-			postMethod.releaseConnection();
-		}
-		return result;
-	}
-
-	public String getUrl(String URL)  {
-		String result = null;
-		GetMethod getMethod = new GetMethod(URL);
-		try{
-			getMethod.getParams().setContentCharset("UTF-8");
-			httpClient.executeMethod(getMethod);
-			result = getMethod.getResponseBodyAsString();
-		}catch (Exception e) {
-			e.printStackTrace();
-		}finally{
-			getMethod.releaseConnection();
-		}
-		return result;
 	}
 	
 /*	public Document getDocument(String filePath){
@@ -137,10 +85,10 @@ public class Common {
             bis.reset();   
             if ( !checked ) {   
             //    int len = 0;   
-                int loc = 0;   
+             //   int loc = 0;   
   
                 while ( (read = bis.read()) != -1 ) {   
-                    loc++;   
+                //    loc++;   
                     if ( read >= 0xF0 ) break;   
                     if ( 0x80 <= read && read <= 0xBF ) // 单独出现BF以下的，也算是GBK   
                     break;   

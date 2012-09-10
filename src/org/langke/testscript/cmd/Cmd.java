@@ -5,7 +5,6 @@ import org.langke.testscript.util.HttpClientUtil;
 import org.langke.testscript.util.HttpSupporter;
 import org.langke.testscript.util.Response;
 import org.langke.testscript.util.TestConfig;
-import org.langke.testscript.util.HttpClientUtil.Execute;
 
 public abstract class Cmd {
 	public abstract Object exec(String command,String key,String URL,String BODY,String METHOD,TestConfig projConfig);

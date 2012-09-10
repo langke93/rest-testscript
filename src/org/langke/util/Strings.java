@@ -5,13 +5,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Iterator;
 import java.util.List;
-
-/*
- *   @copyright (c) Qeeka 2011 
- * @author YinChunhui    Jul 25, 2011 
- */
+ 
 public class Strings {
 
 	public static int[] toIntArray(String[] array){
@@ -259,7 +254,7 @@ public class Strings {
 
 	}
 
-	public static String listToString(List list){		
+	public static String listToString(List<?> list){		
 		return list.toString().replace("[", "").replace("]", "").replace(" ","");
 	}
 	public static void main(String[] args) {

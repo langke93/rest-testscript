@@ -21,9 +21,6 @@ package org.langke.util.logging.log4j;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-
-
-import org.apache.log4j.PropertyConfigurator;
 import org.langke.util.logging.support.AbstractESLogger;
 
 /**

@@ -26,7 +26,6 @@ import java.io.File;
 import org.apache.log4j.PropertyConfigurator;
 import org.langke.util.logging.jdk.JdkESLoggerFactory;
 import org.langke.util.logging.log4j.Log4jESLoggerFactory;
-import org.langke.util.logging.slf4j.Slf4jESLoggerFactory;
 
 /**
  * @author kimchy (shay.banon)

@@ -13,7 +13,6 @@ import org.apache.commons.httpclient.methods.RequestEntity;
 import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
 import org.apache.commons.httpclient.params.HttpMethodParams;
-import org.langke.util.Strings;
 import org.langke.util.logging.ESLogger;
 import org.langke.util.logging.Loggers;
  
@@ -80,7 +79,7 @@ public class HttpClientUtil {
 					try {
 						url = new URI(url).toASCIIString();
 					} catch (URISyntaxException e) {
-						log.error("{}", Strings.throwableToString(e));
+						log.error("{}", e.getMessage());
 					}
 				}
 				get = new GetMethod(url);
@@ -92,8 +91,8 @@ public class HttpClientUtil {
 				res.code = status;
 			} catch (Exception e) {
 				res.setCode(500);
-				res.setMsg(Strings.throwableToString(e));
-				log.error("{}", Strings.throwableToString(e));
+				res.setMsg(e.getMessage());
+				log.error("{}", e.getMessage());
 			} finally{
 				if(get != null){
 					get.releaseConnection();
@@ -119,8 +118,8 @@ public class HttpClientUtil {
 				return res;
 			} catch (Exception e) {
 				res.setCode(500);
-				res.setMsg(Strings.throwableToString(e));
-				log.error("{}", Strings.throwableToString(e));
+				res.setMsg(e.getMessage());
+				log.error("{}", e.getMessage());
 			} finally{
 				if(post != null){
 					post.releaseConnection();
@@ -147,8 +146,8 @@ public class HttpClientUtil {
 				return res;
 			} catch (Exception e) {
 				res.setCode(500);
-				res.setMsg(Strings.throwableToString(e));
-				log.error("{}", Strings.throwableToString(e));
+				res.setMsg(e.getMessage());
+				log.error("{}", e.getMessage());
 			} finally{
 				if(put != null){
 					put.releaseConnection();
@@ -172,8 +171,8 @@ public class HttpClientUtil {
 				return res;
 			} catch (Exception e) {
 				res.setCode(500);
-				res.setMsg(Strings.throwableToString(e));
-				log.error("{}", Strings.throwableToString(e));
+				res.setMsg(e.getMessage());
+				log.error("{}", e.getMessage());
 			} finally{
 				if(delete != null){
 					delete.releaseConnection();
@@ -198,7 +197,7 @@ public class HttpClientUtil {
 				try {
 					Thread.sleep(20);
 				} catch (InterruptedException e) {
-					log.error("{}", Strings.throwableToString(e));
+					log.error("{}", e.getMessage());
 				}
 			}
 			return res;

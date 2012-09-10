@@ -15,7 +15,6 @@ import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLSession;
 
-import org.langke.testscript.cmd.Concurrent;
 import org.langke.util.logging.ESLogger;
 import org.langke.util.logging.Loggers;
 

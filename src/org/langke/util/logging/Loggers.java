@@ -19,11 +19,6 @@
 
 package org.langke.util.logging;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-import java.util.List;
-
-import static java.util.Arrays.*;
 
 /**
  * A set of utilities around Logging.
@@ -54,11 +49,11 @@ public class Loggers {
 		return ESLoggerFactory.getLogger(s);
 	}
 
-	public static ESLogger getLogger(Class clazz) {
+	public static ESLogger getLogger(Class<?> clazz) {
 		return ESLoggerFactory.getLogger(getLoggerName(clazz));
 	}
 
-	public static ESLogger getLogger(Class clazz, String... prefixes) {
+	public static ESLogger getLogger(Class<?> clazz, String... prefixes) {
 		return getLogger(getLoggerName(clazz), prefixes);
 	}
 
@@ -79,7 +74,7 @@ public class Loggers {
 		return ESLoggerFactory.getLogger(prefix, getLoggerName(name));
 	}
 
-	private static String getLoggerName(Class clazz) {
+	private static String getLoggerName(Class<?> clazz) {
 		String name = clazz.getName();
 		// if (name.startsWith("org.elasticsearch.")) {
 		// name = Classes.getPackageName(clazz);
