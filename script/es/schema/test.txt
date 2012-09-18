@@ -1,8 +1,0 @@
-${BASE_URL}:${PORT}/${INDEX_NAME}
-
-PUT
-
-
-
-
-
