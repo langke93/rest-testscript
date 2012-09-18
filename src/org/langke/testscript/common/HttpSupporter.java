@@ -1,4 +1,4 @@
-package org.langke.testscript.util;
+package org.langke.testscript.common;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -18,10 +18,15 @@ import javax.net.ssl.SSLSession;
 import org.langke.util.logging.ESLogger;
 import org.langke.util.logging.Loggers;
 
-
+/**
+ * URLConnection 调用http方法封装
+ * @author langke
+ * @since JDK1.6
+ * @version 1.0
+ */
 public class HttpSupporter {
-
-	static ESLogger log = Loggers.getLogger(HttpSupporter.class);
+	private static ESLogger log = Loggers.getLogger(HttpSupporter.class);
+	
 	public static String doRequest(String url,String body, String method) {
 		String result = null;
 		byte[] bodyByte ;
@@ -32,11 +37,12 @@ public class HttpSupporter {
 				bodyByte = body.getBytes("UTF-8");
  			result = doRequest( url,bodyByte ,  method) ;
 		} catch (UnsupportedEncodingException e) {
-			result = e.getMessage();
-			e.printStackTrace();
+			result = e.toString();
+			log.error("{}", e);
 		}
 		return result;
 	}
+	
 	public static String doRequest(String url, byte[] body, String method) {
 		ByteArrayOutputStream content = new ByteArrayOutputStream();
 		InputStream is = null;
@@ -52,7 +58,7 @@ public class HttpSupporter {
 				try {
 					url = new URI(url).toASCIIString();
 				} catch (URISyntaxException e) {
-					e.printStackTrace();
+					log.error("{}", e);
 				}
 			}
 			conn = new URL(url).openConnection();
@@ -100,14 +106,14 @@ public class HttpSupporter {
 				}
 			}
 		} catch (MalformedURLException e) {
-			e.printStackTrace();
+			log.error("{}", e);
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error("{}", e);
 		}
 		try {
 			 result=new String(content.toByteArray(),"UTF-8");
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			log.error("{}", e);
 		}
 		try{
 			if(content != null) content.close(); content = null;
@@ -115,11 +121,10 @@ public class HttpSupporter {
 			if(httpconn!= null) httpconn.disconnect();httpconn = null;
 			if(httpsconn != null)httpsconn.disconnect();
 		}catch(Exception e){
-			e.printStackTrace();
+			log.error("{}", e);
 		}
 		return result;
 	}
-
 
 	public Response getRequestToResponse(String url, String body, String method) {
 		byte[] bodyByte  = null;
@@ -136,11 +141,11 @@ public class HttpSupporter {
 				try {
 					url = new URI(url).toASCIIString();
 				} catch (URISyntaxException e) {
-					e.printStackTrace();
+					log.error("{}", e);
 				}
 			}
 		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
+			log.error("{}", e);
 		}
 		ByteArrayOutputStream content = new ByteArrayOutputStream();
 		InputStream is = null;
@@ -199,9 +204,9 @@ public class HttpSupporter {
 			response.setMsg(httpconn.getResponseMessage());
 			response.setResult(result);
 		} catch (MalformedURLException e) {
-			e.printStackTrace();
+			log.error("{}", e);
 		} catch (Exception e) {			
-			log.error(e.getMessage(), e);
+			log.error("{}", e);
 		} finally{
 			try{
 				if(content != null) content.close();
@@ -209,7 +214,7 @@ public class HttpSupporter {
 				if(httpconn!= null) httpconn.disconnect();
 				if(httpsconn != null)httpsconn.disconnect();
 			}catch(Exception e){
-				e.printStackTrace();
+				log.error("{}", e);
 			}
 		}
 		return response;

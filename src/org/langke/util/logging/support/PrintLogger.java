@@ -1,6 +1,6 @@
 package org.langke.util.logging.support;
 
-import org.langke.util.Strings;
+import org.langke.testscript.common.Strings;
 
 public class PrintLogger
 	extends AbstractESLogger

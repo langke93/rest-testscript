@@ -1,12 +1,16 @@
-package org.langke.testscript.data;
+package org.langke.testscript.tag;
 
 import java.io.File;
 import java.util.Random;
 
 import org.apache.commons.lang.RandomStringUtils;
-import org.langke.testscript.util.Common;
+import org.langke.testscript.common.FileUtil;
 
-
+/**
+ * 把标签替换为随机关键词
+ * @author langke
+ *
+ */
 public class Querywd  implements Tag{
 
 	Random random = new Random(Integer.MAX_VALUE);//设置随机种子数
@@ -32,7 +36,7 @@ public class Querywd  implements Tag{
 		String randomStr ;
 		int randNumber ;
 		
-		Common common = new Common();
+		FileUtil common = new FileUtil();
 		File querywdFile = new File(querywdFilePath);
 		String querywd[] = null;
 		if(querywdFilePath!=null && querywdFile.exists())

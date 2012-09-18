@@ -1,4 +1,4 @@
-package org.langke.testscript.util;
+package org.langke.testscript.common;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -9,7 +9,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
-public class Common {
+/**
+ * 公共文件处理类
+ * @author langke
+ * @since JDK1.6
+ * @version 1.0
+ *
+ */
+public class FileUtil {
 	private  BufferedReader br;
 	private  String line;
  

@@ -1,5 +1,3 @@
-/**
- */
 package org.langke.testscript;
 
 import java.io.BufferedReader;
@@ -19,19 +17,18 @@ import net.sf.json.JSONObject;
 
 import org.langke.testscript.cmd.Cmd;
 import org.langke.testscript.cmd.CmdFactory;
-import org.langke.testscript.data.Querywd;
-import org.langke.testscript.data.Tag;
-import org.langke.testscript.data.TagFactory;
-import org.langke.testscript.util.Common;
-import org.langke.testscript.util.HttpSupporter;
-import org.langke.testscript.util.TestConfig;
+import org.langke.testscript.common.FileUtil;
+import org.langke.testscript.common.HttpSupporter;
+import org.langke.testscript.common.TestConfig;
+import org.langke.testscript.tag.Querywd;
+import org.langke.testscript.tag.Tag;
+import org.langke.testscript.tag.TagFactory;
 import org.langke.util.logging.ESLogger;
 import org.langke.util.logging.Loggers;
 
 
 /**
- * @author langke_li
- *	读取运行测试用例脚本  Usage: Test <project> <operate>
+ * 读取运行测试用例脚本  Usage: Test <project> <operate>
  * 标签配置在每个脚本项目根目录下test.properties文件里，在运行时，会把脚本里标签替换成properties文件里key对应的值
  * 生成器标签：
  * 		SEQINT，自增整数 Usage:${SEQINT.0}
@@ -43,24 +40,31 @@ import org.langke.util.logging.Loggers;
  * 测试脚本格式：
  * 		第一段URL，第二段METHOD，第三段请求BODY，第四段预计结果；第五段指令${FOREACH} ${SLEEP}
  * 		以空行区分每个段落
+ * @author langke
+ * @since JDK1.6
+ * @version 1.0
+ * 
  */
 public class Test {
-
-	static ESLogger log = Loggers.getLogger(Test.class);
-
 	public static volatile ConcurrentHashMap<String,String> current=new ConcurrentHashMap<String,String>();
+	private static ESLogger log = Loggers.getLogger(Test.class);
+
 	/**
-	 * @param args
+	 * @param args[0] 脚本一级目录 测试脚本项目
+	 * @param args[1] 脚本二级目录 测试步骤
+	 * @param args[n] 脚本n级目录
 	 */
 	public static void main(String[] args) {
 		String msg = null;
-		String testProj;//测试脚本项目
-		String operate;//测试步骤
-		String exec_script_dir = null;//执行指定目录下脚本
+		//测试脚本项目
+		String testProj;
+		//测试步骤
+		String operate;
+		//执行指定目录下脚本
+		String exec_script_dir = null;
 		String workDir;
 		TestConfig projConfig;
-		//TestConfig config=TestConfig.getInstance("./conf/test.properties");
-		String testBase = "testscript";//config.get("testBase","testscript");
+		String testBase = "rest-testscript";
 		String home=System.getProperty("SEARCH.home", null);
 		Test test = new Test();
 		if(home!=null){
@@ -81,13 +85,34 @@ public class Test {
 		msg = "\n Usage: Test <project> <operate>\n ";
 		if(args.length==0){
 			msg += "please choose test project:\n";
+			msg += "or -c100 -t60 url \n";
+			msg += "-c concurrent num \n";
+			msg += "-t run time \n";
 			msg += test.getSubDirectoryName(testBase);
 			log.info(msg);
 			return;
 		}else{
 			testProj = args[0];
 		}
-		if(args.length==1){
+		
+		if(testProj.startsWith("http://")){
+			Test.webbench(testProj, null, null);
+			return;	
+		}else if(args.length==3 && (args.toString().indexOf("-c")!=-1 || args.toString().indexOf("-t")!=-1)){//直接测试URL,webbench
+			Integer concurrent = null;
+			Integer time = null;
+			String url = null;
+			for(int i=0;i<args.length;i++){
+				if(args[i].startsWith("-c"))
+					concurrent = Integer.parseInt(args[i].replace("-c", ""));
+				else if(args[i].startsWith("-t"))
+					time = Integer.parseInt(args[i].replace("-t", ""));
+				else
+					url = args[i];
+			}
+			Test.webbench(url, concurrent, time);
+			return;	
+		}else if(args.length==1){
 			msg += "please choose operate:\n ";
 			msg += "	all\n";
 			msg += test.getSubDirectoryName(testBase+File.separator+testProj);
@@ -104,7 +129,8 @@ public class Test {
 				workDir = testBase+File.separator+testProj+File.separator+operate;
 				projConfig=TestConfig.getInstance(testBase+File.separator+testProj+"/test.properties");
 				test.execute(workDir,exec_script_dir,projConfig);
-			}else	if(operate.equals("all")){//顺序执行脚本
+			}else if(operate.equals("all")){
+				//顺序执行脚本
 				String fileBase = testBase+File.separator+testProj+File.separator;
 				FileFilter fileFilter =   new FileFilter() {
 					public boolean accept(File pathname) {
@@ -125,13 +151,26 @@ public class Test {
 					}
 				}
 			}else{
-
 				workDir = testBase+File.separator+testProj;
 				System.setProperty("TESTSCRIPT.WORK.DIR", workDir);
 				projConfig=TestConfig.getInstance(workDir+"/test.properties");
 				test.execute(workDir,operate,projConfig);
 			}
 		}
+	}
+	
+	/**
+	 * url并发测试
+	 * @param url 
+	 * @param concurrent 并发数
+	 * @param time 执行时间
+	 * @since 1.0
+	 * @out 输出执行结果
+	 */
+	public static void webbench(String url,Integer concurrent,Integer time){
+		WebBench webBench = new WebBench();
+		String result = webBench.runInTime(url, concurrent, time);
+		log.info("{}", result);
 	}
 	private Object execute(String workDir, String operate,TestConfig projConfig) {
 		log.info("execute workDir:"+workDir+"	operate:"+operate, workDir,operate);
@@ -146,7 +185,7 @@ public class Test {
 		}
 		File reportDir  = new File(workDir+File.separator+"report");
 		if(reportDir.exists()){//初始化report目录
-			Common.deleteFile(reportDir);
+			FileUtil.deleteFile(reportDir);
 		}
 		File files = new File(workDir+File.separator+operate);
 		for(File scriptFiles:files.listFiles()){
@@ -164,7 +203,7 @@ public class Test {
 			if(scriptFiles.isFile() && !scriptFiles.isHidden() && !scriptFiles.getName().startsWith(".") && scriptFiles.getName().endsWith(".txt")){//只执行.txt格式脚本
 				try {
 					fileReader = new FileReader(scriptFiles);
-					file_encoding = Common.getCharset(scriptFiles);//fileReader.getEncoding();
+					file_encoding = FileUtil.getCharset(scriptFiles);//fileReader.getEncoding();
 					//log.info("file_encoding:{}", file_encoding);
 					br = new BufferedReader(new InputStreamReader(new FileInputStream(scriptFiles),file_encoding));
 					while ((line = br.readLine()) != null) {
@@ -208,7 +247,8 @@ public class Test {
 					}
 				}
 				
-				System.setProperty("TESTSCRIPT.SEQINT.KEY", new String(workDir+File.separator+operate+File.separator+ scriptFiles.getName()).hashCode()+"");//文件名hashCode作为自增环境变量KEY
+				//文件名hashCode作为自增环境变量KEY
+				System.setProperty("TESTSCRIPT.SEQINT.KEY", new String(workDir+File.separator+operate+File.separator+ scriptFiles.getName()).hashCode()+"");
 				
 				if(null==URL || null==METHOD || URL.length()==0 || METHOD.length()==0)
 					continue;//忽略无效文件
@@ -227,7 +267,8 @@ public class Test {
 						stringBuffer.delete(0, stringBuffer.length());
 					}
 				}
-				if(count>=4 && command!=null && command.length()!=0){//带命令标签，处理
+				//带命令标签，处理
+				if(count>=4 && command!=null && command.length()!=0){
 					result = processCommand(command,URL,BODY,METHOD,projConfig);
 				}else{
 					URL = replaceTag(projConfig, URL);
@@ -250,7 +291,7 @@ public class Test {
 	 * @param BODY
 	 * @param METHOD
 	 * @param projConfig
-	 * @return
+	 * @return String 处理结果字符串
 	 */
 	public  String processCommand(String command,String URL,String BODY,String METHOD, TestConfig projConfig) {
 		String result = null;
@@ -273,11 +314,22 @@ public class Test {
 				}
 			}//end for
 		}catch(Exception e){
-			e.printStackTrace();
+			log.error("{}", e);
 		}
 		return result;
 		
 	}
+	
+	/**
+	 * 输出报告
+	 * @param workDir
+	 * @param fileName
+	 * @param result
+	 * @param expected
+	 * @param URL
+	 * @param BODY
+	 * @param METHOD
+	 */
 	public void reportFile(String workDir,String fileName,String result,String expected,String URL,String BODY,String METHOD){
 		if(result!=null) 
 			result = result.trim();
@@ -287,11 +339,13 @@ public class Test {
 		int totalExpected = getTotal(expected);
 		int totalResult = getTotal(result);
 		boolean contentNotEqual = true;
-		if(totalExpected==totalResult){//结果相符再需判断内容
+		//结果相符再需判断内容
+		if(totalExpected==totalResult){
 			if(ignore(result).equals(ignore(expected)))
 				contentNotEqual = false;
 		}
-		if((totalExpected!=totalResult) || (totalExpected==-1) || contentNotEqual){//预计结果不符
+		//预计结果不符
+		if((totalExpected!=totalResult) || (totalExpected==-1) || contentNotEqual){
 			BufferedWriter writer = null;
 			String dirName = "report";
 			try {//写入report.txt
@@ -320,6 +374,7 @@ public class Test {
 			}
 		}
 	}
+	
 	/**
 	 * 处理导数据XML
 	 * @param url
@@ -327,8 +382,8 @@ public class Test {
 	 * @param common
 	 */
 	/*
-	private void importData(String url, String xmlString,Common common) {
-	    Element element = Common.getJdomElement(xmlString);
+	private void importData(String url, String xmlString,FileUtil common) {
+	    Element element = FileUtil.getJdomElement(xmlString);
 		Element testdata ;
 		List<?> testdataList ;
 		String method ;
@@ -353,13 +408,13 @@ public class Test {
 		}
 
 	}
-*/
+	 */
 	
 	/**
 	 * 标签替换
 	 * @param projConfig
 	 * @param str
-	 * @return
+	 * @return 替换后标签
 	 */
 	public static String replaceTag(TestConfig projConfig,String str){
 		String key ;
@@ -397,7 +452,7 @@ public class Test {
 	/**
 	 * 取子目录列表
 	 * @param dirName
-	 * @return
+	 * @return String 子目录树字符串
 	 */
 	public String getSubDirectoryName(String dirName){
 		String fileNameList = "" ;
@@ -411,7 +466,7 @@ public class Test {
 	/**
 	 * 取返回结果记录数
 	 * @param str
-	 * @return
+	 * @return int 结果记录数
 	 */
 	public int getTotal(String str) {
 		int total = -1;
@@ -437,9 +492,15 @@ public class Test {
 		return total;
 	}
 	
+	/**
+	 * 忽略返回json串中某个值对，用于输出报告时比对
+	 * @param str
+	 * @return String
+	 */
 	public String ignore(String str){
 		str = str.replaceAll("null", "NULL");
-		String keys[] = {"qTime", "affectedCount"};//需要忽略的字段
+		//需要忽略的字段
+		String keys[] = {"qTime", "affectedCount"};
 		if (str.startsWith("{")) {
 			try{
 				JSONObject json = JSONObject.fromObject(str);

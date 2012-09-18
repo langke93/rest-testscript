@@ -1,4 +1,4 @@
-package org.langke.util;
+package org.langke.testscript.common;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
@@ -6,7 +6,14 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
- 
+
+/**
+ * 字符串处理类
+ * @author langke
+ * @since JDK1.6
+ * @version Strings1.0
+ *
+ */
 public class Strings {
 
 	public static int[] toIntArray(String[] array){

@@ -2,11 +2,15 @@
 	linux:
 	cd /data/search/rest-testscript/bin
 	sh run.sh hash query
+	sh run.sh -c100 -t60 url
 	win:
 	cd D:\workspaces\rest-testscript\bin
 	run.bat hash query
 
 	读取运行测试用例脚本  Usage: org.langke.testscript.Test <project> <operate> <scriptSubDir>
+	-c 并发数
+	-t 执行时间
+	url GET访问地址
 	project测试脚本项目目录名称，
 	operate测试步骤目录名称，可以是all表示递归执行该目录下所有脚本
 	scriptSubDir 子目录名 执行步骤目录下子目录脚本

@@ -1,11 +1,18 @@
 package org.langke.testscript.cmd;
 
-import org.langke.testscript.util.TestConfig;
+import org.langke.testscript.common.TestConfig;
 import org.langke.util.logging.ESLogger;
 import org.langke.util.logging.Loggers;
 
+/**
+ * 休眠指令
+ * @author langke
+ *
+ */
 public class Sleep  extends Cmd{
-	static ESLogger log = Loggers.getLogger(Sleep.class);
+	private static ESLogger log = Loggers.getLogger(Sleep.class);
+	
+	@Override
 	public Object exec(String command,String key,String URL,String BODY,String METHOD,TestConfig projConfig) {
 		String result = postData(URL, BODY, METHOD, projConfig);//提交数据
 		String tag = "${"+key+".";

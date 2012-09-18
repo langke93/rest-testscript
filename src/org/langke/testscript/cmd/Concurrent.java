@@ -2,37 +2,43 @@ package org.langke.testscript.cmd;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.langke.testscript.util.HttpSupporter;
-import org.langke.testscript.util.Response;
-import org.langke.testscript.util.TestConfig;
+import org.langke.testscript.common.HttpSupporter;
+import org.langke.testscript.common.Response;
+import org.langke.testscript.common.TestConfig;
 import org.langke.util.logging.ESLogger;
 import org.langke.util.logging.Loggers;
 
 import net.sf.json.JSONObject;
 
-
+/**
+ * 并发指令
+ * @author langke
+ * @since JDK1.6
+ * @version 1.8
+ *
+ */
 public class Concurrent extends Cmd{
+	private ESLogger log = Loggers.getLogger(Concurrent.class);
 	private String url;
 	private String body;
 	private String method;
 	private TestConfig projConfig;
-	static volatile String result;
-	static  AtomicInteger send=new AtomicInteger();
-	static  AtomicInteger receive=new AtomicInteger();
-	static  AtomicInteger qps=new AtomicInteger();//每秒执行次数
-	static  AtomicInteger maxQps=new AtomicInteger();	
-	static  AtomicInteger success = new AtomicInteger();
-	static  AtomicInteger error=new AtomicInteger();
-	static  AtomicInteger totalShowTime = new AtomicInteger();//显示查询时间
-	static  AtomicInteger totalFactTime = new AtomicInteger();//实际查询时间
-	static  AtomicInteger totalHits = new AtomicInteger();//结果记录数
-	static  AtomicInteger affected = new AtomicInteger();//影响记录数
-	static volatile boolean stopThread = false;
-	static Integer total = 1;//并发数
-	static Integer taskNum = 1;//任务个数
-	static Long exec_time;
-	static ESLogger log = Loggers.getLogger(Concurrent.class);
-	static Object lock = new Object();
+	volatile String result;
+	AtomicInteger send=new AtomicInteger();
+	AtomicInteger receive=new AtomicInteger();
+	AtomicInteger qps=new AtomicInteger();//每秒执行次数
+	AtomicInteger maxQps=new AtomicInteger();	
+	AtomicInteger success = new AtomicInteger();
+	AtomicInteger error=new AtomicInteger();
+	AtomicInteger totalShowTime = new AtomicInteger();//显示查询时间
+	AtomicInteger totalFactTime = new AtomicInteger();//实际查询时间
+	AtomicInteger totalHits = new AtomicInteger();//结果记录数
+	AtomicInteger affected = new AtomicInteger();//影响记录数
+	volatile boolean stopThread = false;
+	Integer total = 1;//并发数
+	Integer taskNum = 1;//任务个数
+	Long exec_time;
+	Object lock = new Object();
 	
 	void setParm(String url,String body,String method,TestConfig projConfig){
 		this.url = url;
@@ -57,7 +63,11 @@ public class Concurrent extends Cmd{
 		error.incrementAndGet();
 		receive.incrementAndGet();
 		result = response.getResult();
+		if(error.get()<10 && response !=null){
+			log.error("{}", JSONObject.fromObject(response));
+		}
 	}
+	
 	@Override
 	public Object exec(String command, String key, String URL, String BODY,
 			String METHOD,  final TestConfig projConfig) {
@@ -81,6 +91,8 @@ public class Concurrent extends Cmd{
 		waitTaskReport();
 		return result;
 	}
+
+	
 	/**
 	 * 执行任务线程
 	 * @param i
@@ -88,7 +100,7 @@ public class Concurrent extends Cmd{
 	public void taskThread(int i){
 		new Thread("test_main"+i){
 				 public void run(){
-					 Response response = new Response();
+					Response response = new Response();
 					JSONObject json;
 					String qtime;
 					int showTime = 0;
@@ -106,34 +118,35 @@ public class Concurrent extends Cmd{
 								 if(response.getCode()!=200)
 									 failed(response);
 									 //error.incrementAndGet();
-								 //result = response.getResult();			
-								
-								 if(response.getResult() == null) continue;
-								json = JSONObject.fromObject(response.getResult());
-								if(json.isEmpty() || json.isNullObject()) continue;
-								qtime =getJsonString(projConfig.get("COST_TIME", "qTime"),json);
-								if(qtime!=null){
-									if(qtime.endsWith("ms"))
-										showTime = Integer.parseInt(qtime.substring(0,qtime.length()-2));
-									else
-										showTime = Integer.valueOf(qtime);
-									//totalShowTime.addAndGet(showTime);
-								}
-								affectedCountTemp = getJsonString("affectedCount",json);
-								if(affectedCountTemp!=null){
-									affected.addAndGet(Integer.parseInt(affectedCountTemp));
-								}
-								json = json.getJSONObject("hits");
-								if(json != null && !json.isEmpty() && !json.isNullObject()){
-									hits = Integer.parseInt(json.getString("total"));
-									//totalHits.addAndGet(total);
+								 //result = response.getResult();
+								if(response.getHeader()!=null && response.getHeader().indexOf("json")!=-1){
+									if(response.getResult() == null) continue;
+									json = JSONObject.fromObject(response.getResult());
+									if(json.isEmpty() || json.isNullObject()) continue;
+									qtime =getJsonString(projConfig.get("COST_TIME", "qTime"),json);
+									if(qtime!=null){
+										if(qtime.endsWith("ms"))
+											showTime = Integer.parseInt(qtime.substring(0,qtime.length()-2));
+										else
+											showTime = Integer.valueOf(qtime);
+										//totalShowTime.addAndGet(showTime);
+									}
+									affectedCountTemp = getJsonString("affectedCount",json);
+									if(affectedCountTemp!=null){
+										affected.addAndGet(Integer.parseInt(affectedCountTemp));
+									}
+									json = json.getJSONObject("hits");
+									if(json != null && !json.isEmpty() && !json.isNullObject()){
+										hits = Integer.parseInt(json.getString("total"));
+										//totalHits.addAndGet(total);
+									}
 								}
 								factTime = (int)(timer);
 								//totalFactTime.addAndGet(factTime);
 								success(showTime, factTime, hits, response);
 						 }
 					 }catch(Exception e){
-						 e.printStackTrace();
+						 log.error("{}", e);
 						 log.error("code{} msg{} result{}", response.getCode(),response.getMsg(),response.getResult());
 						 failed(response);
 					 }
@@ -182,6 +195,14 @@ public class Concurrent extends Cmd{
     	else 
     		return a/b;
     }
+    
+    public int getDiv(long a,int b ){
+    	if(b==0)
+    		return b;
+    	else 
+    		return (int) (a/b);
+    }
+    
 	/**
 	 * 等待任务完成,并汇总执行结果
 	 */
@@ -195,14 +216,14 @@ public class Concurrent extends Cmd{
 						getDiv(totalHits.get(),receive.get()), affected.get(),
 						getDiv(totalShowTime.get(),receive.get()),
 						getDiv(totalFactTime.get(),receive.get()),
-						(receive.get()/(exec_time/1000))
+						getDiv(receive.get(),getDiv(exec_time,1000))
 						);
 				stopThread = true;
 			}
 			try {
 				Thread.sleep(1);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				log.error("{}", e);
 			}
 		}
 	}
@@ -232,12 +253,12 @@ public class Concurrent extends Cmd{
 	public static void main(String args[]){
 		Concurrent co = new Concurrent();
 		String url ="http://192.168.200.62"; //"http://hadoop3:9209/hashShard1//_search?q=_all:woyo.com";
-		total =1;
-		taskNum = 10;
-		exec_time = System.currentTimeMillis();
+		co.total =1;
+		co.taskNum = 10;
+		co.exec_time = System.currentTimeMillis();
 		co.concurrentTest(url);
 		
-/*		Common common = new Common();
+/*		FileUtil common = new FileUtil();
 		for(int i=0;i<total;i++){
 			log.info(common.getUrl(url));
 		}*/

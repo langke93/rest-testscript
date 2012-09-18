@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <project default="jar" basedir="." name="rest-testscript">
+  <property name="project.name" value="rest-testscript"/>
   <property name="version" value="0.1"/>
   <property name="src.dir" value="src"/>
   <property name="lib.dir" value="lib"/>
@@ -24,19 +25,19 @@
   </target>
 	
   <target name="compile" depends="clean">
-    <mkdir dir="${build.dir}/classes"></mkdir>
-    <javac destdir="${build.dir}/classes" encoding="UTF-8" debug="on">
+    <mkdir dir="${build.dir}"></mkdir>
+    <javac destdir="${build.dir}" encoding="UTF-8" debug="on">
           <src path="${src.dir}"/>
       	  <classpath refid="compile.classpath"/>
     </javac>
-    <copydir dest="${build.dir}/classes" src="${src.dir}">
+    <copydir dest="${build.dir}" src="${src.dir}">
       <exclude name="**/*.java"></exclude>
     </copydir>
   </target>
   
   <target name="jar" depends="compile">
-    <jar jarfile="${bin.dir}/rest-testscript-${version}.jar">
-      <fileset dir="${build.dir}/classes"/>
+    <jar jarfile="${bin.dir}/${project.name}-${version}.jar">
+      <fileset dir="${build.dir}"/>
     </jar>
   </target>
 	 

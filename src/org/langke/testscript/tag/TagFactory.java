@@ -1,10 +1,10 @@
-package org.langke.testscript.data;
+package org.langke.testscript.tag;
 
 import java.util.HashMap;
 import java.util.Map;
 /**
  * 标签定义
- * @author langke_li
+ * @author langke
  *
  */
 public class TagFactory {

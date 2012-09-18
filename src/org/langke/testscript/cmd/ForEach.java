@@ -2,17 +2,22 @@ package org.langke.testscript.cmd;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.langke.testscript.util.Response;
-import org.langke.testscript.util.TestConfig;
+import org.langke.testscript.common.Response;
+import org.langke.testscript.common.TestConfig;
 import org.langke.util.logging.ESLogger;
 import org.langke.util.logging.Loggers;
 
 
 /**
+ * 循环指令
  * 循环提交数据
+ * @author langke
+ *
  */
 public class ForEach extends Cmd{
-	static ESLogger log = Loggers.getLogger(ForEach.class);
+	private static ESLogger log = Loggers.getLogger(ForEach.class);
+	
+	@Override
 	public Object exec(String command,String key,String URL,String BODY,String METHOD,TestConfig projConfig) {
 		AtomicInteger errorCount=new AtomicInteger();
 		Long exec_time;

@@ -1,0 +1,7 @@
+${BASE_URL}:${PORT}/servlet/test?task=${SEQINT.1}
+
+GET
+
+
+
+${CONCURRENT.300_100}

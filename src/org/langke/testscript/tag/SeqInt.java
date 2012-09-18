@@ -1,5 +1,10 @@
-package org.langke.testscript.data;
+package org.langke.testscript.tag;
 
+/**
+ * 自增数
+ * @author langke 
+ *
+ */
 public class SeqInt  implements Tag{
 	public synchronized Object replaceTag(String str,String key) {
 		String tag = "${"+key+".";
@@ -17,7 +22,8 @@ public class SeqInt  implements Tag{
 				seqint = Integer.valueOf(temp);
 			str = str.replaceFirst("\\$\\{"+key+"."+temp+"}", String.valueOf(seqint));//$和{在replaceFirst,replaceAll作为正则表达式需要转义\\$\\{
 		}
-		seqint ++;//写在循环外表单个脚本里自增变量值相同
+		//写在循环外表单个脚本里自增变量值相同
+		seqint ++;
 		System.setProperty(seqIntKey, String.valueOf(seqint));
 		return str;
 	}
