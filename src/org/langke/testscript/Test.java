@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -94,11 +95,11 @@ public class Test {
 		}else{
 			testProj = args[0];
 		}
-		
+
 		if(testProj.startsWith("http://")){
 			Test.webbench(testProj, null, null);
 			return;	
-		}else if(args.length==3 && (args.toString().indexOf("-c")!=-1 || args.toString().indexOf("-t")!=-1)){//直接测试URL,webbench
+		}else if(args.length==3 && (Arrays.toString(args).indexOf("-c")!=-1 || Arrays.toString(args).indexOf("-t")!=-1)){//直接测试URL,webbench
 			Integer concurrent = null;
 			Integer time = null;
 			String url = null;

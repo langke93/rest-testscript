@@ -1,5 +1,7 @@
 package org.langke.testscript;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import net.sf.json.JSONObject;
@@ -78,11 +80,15 @@ public class WebBench {
 		this.exec_time = this.startTime;
 		this.runTime = (long) (time * 1000);
 		this.total = concurrent;
+		ExecutorService es = Executors.newFixedThreadPool(concurrent);
 		for(int i=0;i<total;i++){//并发循环
-			taskThread(i);
+			Runnable task = taskThread(i);
+			es.submit(task);
 		}
 		monitorReportThread();	
 		waitTaskReport();
+		es.shutdownNow();
+		es.shutdown();//关闭线程池
 		return result;
 	}
 	
@@ -90,8 +96,8 @@ public class WebBench {
 	 * 执行任务线程
 	 * @param i
 	 */
-	public void taskThread(int i){
-		new Thread("test_main"+i){
+	public Runnable taskThread(int i){
+		return new Thread("test_main"+i){
 				 public void run(){
 					 Response response = new Response();
 					int showTime = 0;
@@ -121,7 +127,7 @@ public class WebBench {
 						 failed(response);
 					 }
 				}
-		}.start();
+		};
 	}
 	
 	/**

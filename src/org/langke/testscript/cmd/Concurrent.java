@@ -1,5 +1,7 @@
 package org.langke.testscript.cmd;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import org.langke.testscript.common.HttpSupporter;
@@ -84,11 +86,15 @@ public class Concurrent extends Cmd{
 		}
 		setParm(URL, BODY, METHOD,projConfig);		
 		exec_time = System.currentTimeMillis();
+		ExecutorService es = Executors.newFixedThreadPool(total);
 		for(int i=0;i<total;i++){//并发循环			
-			taskThread(i);
+			Runnable task = taskThread(i);
+			es.submit(task);
 		}
 		monitorReportThread();	
 		waitTaskReport();
+		es.shutdownNow();
+		es.shutdown();
 		return result;
 	}
 
@@ -97,8 +103,8 @@ public class Concurrent extends Cmd{
 	 * 执行任务线程
 	 * @param i
 	 */
-	public void taskThread(int i){
-		new Thread("test_main"+i){
+	public Runnable taskThread(int i){
+		return new Thread("test_main"+i){
 				 public void run(){
 					Response response = new Response();
 					JSONObject json;
@@ -151,7 +157,7 @@ public class Concurrent extends Cmd{
 						 failed(response);
 					 }
 				}
-		}.start();
+		};
 	}
 	
 	/**
