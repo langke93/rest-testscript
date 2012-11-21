@@ -12,7 +12,7 @@ base rest testscript 这是一个基于java http connection写的测试框架，
 	cd D:\workspaces\rest-testscript\bin
 	run.bat hash query
 </pre>
-h3.编写测试用例
+h3. 编写测试用例
 <pre>
 cd rest-testscript/bin
 mkdir -p ../script/jetty/jsp
