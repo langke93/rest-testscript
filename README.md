@@ -41,6 +41,7 @@ GET
 ${CONCURRENT.300_100}
                        
 </pre>
+执行结果
 <img src="https://raw.github.com/langke93/rest-testscript/master/doc/img/example-rest.jpg" title="rest 测试用例"/>
 	
 	读取运行测试用例脚本  Usage: org.langke.testscript.Test <project> <operate> <scriptSubDir>
