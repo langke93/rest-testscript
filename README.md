@@ -1,7 +1,7 @@
 rest-testscript
 ===============
 
-base rest testscript 这是一个基于java http connection 、httpclient写的测试框架，可用于并发测试、性能测试，测试驱动开发等场景 可以支持自增、随机、循环、并发等标签;
+base rest testscript 这是一个基于java http connection 、httpclient写的测试框架，可用于并发测试、性能测试，测试驱动开发等场景 可以支持自增、随机、循环、并发等标签
 
 运行用例：<br/>
 <pre>
@@ -14,7 +14,7 @@ base rest testscript 这是一个基于java http connection 、httpclient写的�
 	run.bat hash query
 </pre>
 
-###快速并发测试
+###快捷并发测试
 类似webbench方式进行压力测试
  sh run.sh -c10000 -t60 http://localhost:9900/demo/test?a=b
  
