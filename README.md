@@ -12,6 +12,35 @@ base rest testscript 这是一个基于java http connection写的测试框架，
 	cd D:\workspaces\rest-testscript\bin
 	run.bat hash query
 </pre>
+h3.编写测试用例
+<pre>
+cd rest-testscript/bin
+mkdir -p ../script/jetty/jsp
+vi ../script/jetty/test.properties 
+#
+BASE_URL=http\://localhost
+PORT=9009
+INDEX_NAME=
+#Tag
+RANDINT=
+SEQINT=
+QUERYWD=
+QUERYWD.PATH=
+#Command
+SLEEP=
+FOREACH=
+CONCURRENT=
+
+vi ../script/jetty/jsp/index.txt 
+${BASE_URL}:${PORT}/index.jsp
+
+GET
+
+
+
+${CONCURRENT.300_100}
+                       
+</pre>
 <img src="https://raw.github.com/langke93/rest-testscript/master/doc/img/example-rest.jpg" title="rest 测试用例"/>
 	
 	读取运行测试用例脚本  Usage: org.langke.testscript.Test <project> <operate> <scriptSubDir>
