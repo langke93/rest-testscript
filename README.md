@@ -11,13 +11,13 @@ base rest testscript 这是一个基于java http connection写的测试框架，
 	cd D:\workspaces\rest-testscript\bin<br/>
 	run.bat hash query<br/>
 
-
-	读取运行测试用例脚本  Usage: org.langke.testscript.Test <project> <operate> <scriptSubDir><br/>
-	project测试脚本项目目录名称，<br/>
-	operate测试步骤目录名称，可以是all表示递归执行该目录下所有脚本<br/>
-	scriptSubDir 子目录名 执行步骤目录下子目录脚本<br/>
-	只执行.txt格式脚本,每个步骤目录下可以有子目录，程序会递归执行<br/>
-
+	<pre>
+	读取运行测试用例脚本  Usage: org.langke.testscript.Test <project> <operate> <scriptSubDir>
+	project测试脚本项目目录名称，
+	operate测试步骤目录名称，可以是all表示递归执行该目录下所有脚本
+	scriptSubDir 子目录名 执行步骤目录下子目录脚本
+	只执行.txt格式脚本,每个步骤目录下可以有子目录，程序会递归执行
+	</pre>
 标签配置在每个脚本项目根目录下test.properties文件里，在运行时：<br/>
  	简单标签会把脚本里标签替换成properties文件里key对应的值<br/>
  	COST_TIME=costTime	用于并发时取服务端返回执行时间的JSON串<br/>
