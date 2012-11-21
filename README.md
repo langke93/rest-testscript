@@ -12,6 +12,7 @@ base rest testscript 这是一个基于java http connection写的测试框架，
 	cd D:\workspaces\rest-testscript\bin
 	run.bat hash query
 </pre>
+<img src="https://raw.github.com/langke93/rest-testscript/master/doc/img/example-rest.jpg" title="rest 测试用例"/>
 	
 	读取运行测试用例脚本  Usage: org.langke.testscript.Test <project> <operate> <scriptSubDir>
 	project测试脚本项目目录名称，
