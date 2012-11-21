@@ -4,20 +4,21 @@ rest-testscript
 base rest testscript 这是一个基于java http connection写的测试框架，可用于并发测试、性能测试，测试驱动开发等场景 可以支持自增、随机、循环、并发等标签
 
 运行用例：<br/>
+<pre>
   linux:<br/>
-	cd /data/search/rest-testscript/bin<br/>
-	sh run.sh hash query<br/>
-	win:<br/>
-	cd D:\workspaces\rest-testscript\bin<br/>
-	run.bat hash query<br/>
-
-	<pre>
+	cd /data/search/rest-testscript/bin
+	sh run.sh hash query
+	win:
+	cd D:\workspaces\rest-testscript\bin
+	run.bat hash query
+</pre>
+	
 	读取运行测试用例脚本  Usage: org.langke.testscript.Test <project> <operate> <scriptSubDir>
 	project测试脚本项目目录名称，
 	operate测试步骤目录名称，可以是all表示递归执行该目录下所有脚本
 	scriptSubDir 子目录名 执行步骤目录下子目录脚本
 	只执行.txt格式脚本,每个步骤目录下可以有子目录，程序会递归执行
-	</pre>
+	
 标签配置在每个脚本项目根目录下test.properties文件里，在运行时：<br/>
  	简单标签会把脚本里标签替换成properties文件里key对应的值<br/>
  	COST_TIME=costTime	用于并发时取服务端返回执行时间的JSON串<br/>
